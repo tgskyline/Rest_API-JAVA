@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-GerenciadorViagensMontanhaApplication<gerenciador-viagens-montanha>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.montanha.gerenciador.GerenciadorViagensMontanhaApplication",
+            "projectName": "gerenciador-viagens-montanha",
+            "args": ""
+        }
+    ]
+}
