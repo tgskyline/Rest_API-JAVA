@@ -1,0 +1,450 @@
+swagger: '2.0'
+info:
+  description: A API usada para responder as perguntas e gerar seu certificado do curso gratuito de introdução aos testes de API Rest do Júlio de Lima
+  version: '1.1'
+  title: CGITAR
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+host: '165.227.93.41'
+basePath: /cgitar
+schemes:
+  - http
+tags:
+  - name: usuarios-controller
+    description: Usuários Controller
+  - name: autenticacao-controller
+    description: Autenticação Controller
+  - name: perguntas-controller
+    description: Perguntas Controller
+  - name: respostas-controller
+    description: Respostas Controller
+  - name: certificados-controller
+    description: Certificados Controller
+paths:
+  /usuarios:
+    post:
+      tags:
+        - usuarios-controller
+      summary: Adiciona um novo usuário
+      operationId: postUsuario
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do usuário"
+        required: true
+        schema:
+          $ref: "#/definitions/UsuariosRequest"
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/UsuariosResponse'
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict
+      deprecated: false
+  /autenticacao:
+    post:
+      tags:
+        - autenticacao-controller
+      summary: Obtém o token de acesso
+      operationId: postAutenticacao
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do usuário"
+        required: true
+        schema:
+          $ref: "#/definitions/AutenticacaoRequest"
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AutenticacaoResponse'
+        '401':
+          description: Not Authorized
+      deprecated: false
+  /perguntas:
+    get:
+      tags:
+        - perguntas-controller
+      summary: Obtém uma nova pergunta aleatória para ser respondida
+      operationId: getPergunta
+      parameters:
+      - in: "header"
+        name: "token"
+        type: "string"
+        description: "Token do usuário"
+        required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PerguntaResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Not Authorized
+      deprecated: false
+  /respostas:
+    post:
+      tags:
+        - respostas-controller
+      summary: Responder uma pergunta
+      operationId: postResposta
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do resposta"
+        required: true
+        schema:
+          $ref: "#/definitions/RespostaRequest"
+      - in: "header"
+        name: "token"
+        type: "string"
+        description: "Token do usuário"
+        required: true
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: CREATED
+          schema:
+            $ref: '#/definitions/RespostaResponse'
+        '401':
+          description: Not Authorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+      deprecated: false
+    get:
+      tags:
+        - respostas-controller
+      summary: Visualização de todas as respostas fornecidas pelo usuário até o momento
+      operationId: getRespostas
+      parameters:
+      - in: "header"
+        name: "token"
+        type: "string"
+        description: "Token do usuário"
+        required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RespostaListaResponse'
+        '401':
+          description: Not Authorized
+      deprecated: false
+  /respostas/{respostaId}:  
+    put:
+      tags:
+        - respostas-controller
+      summary: Alterar a resposta dada a uma pergunta
+      operationId: putResposta
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados da Resposta"
+        required: true
+        schema:
+          $ref: "#/definitions/RespostaAlterarRequest"
+      - in: "path"
+        name: "respostaId"
+        type: "integer"
+        format: "int64"
+        description: "ID da Resposta"
+        required: true
+      - in: "header"
+        name: "token"
+        type: "string"
+        description: "Token do usuário"
+        required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RespostaResponse'
+        '401':
+          description: Not Authorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+      deprecated: false
+  /certificados:
+    post:
+      tags:
+        - certificados-controller
+      summary: Submete as perguntas para obter o certificado
+      operationId: postCertificado
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Dados do certificado"
+        required: true
+        schema:
+          $ref: "#/definitions/CertificadoRequest"
+      - in: "header"
+        name: "token"
+        type: "string"
+        description: "Token do usuário"
+        required: true
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: CREATED
+          schema:
+            $ref: '#/definitions/CertificadoResponse'
+        '401':
+          description: Not Authorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict
+        '422':
+          description: Unprocessable Entity
+      deprecated: false
+    get:
+      tags:
+        - certificados-controller
+      summary: Obtém o resultado do certificado e o link de acesso
+      operationId: getCertificado
+      parameters:
+      - in: "header"
+        name: "token"
+        type: "string"
+        description: "Token do usuário"
+        required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CertificadoResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Not Authorized
+        '422':
+          description: Unprocessable Entity
+      deprecated: false
+definitions:
+  UsuariosResponse:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Usuarios'
+      message:
+        type: array
+        items:
+          type: string
+      error:
+        type: array
+        items:
+          type: string
+    title: UsuariosResponse
+  UsuariosRequest:
+    type: object
+    properties:
+      usuarioNomeCompleto:
+        type: string
+        description: Nome completo do usuário
+      usuarioEmail:
+        type: string
+        description: E-mail do usuário
+      usuarioSenha:
+        type: string
+        description: Senha do usuário
+      usuarioTelefone:
+        type: string
+        description: Telefone do usuário
+    title: UsuariosResponse
+  Usuarios:
+    type: object
+    properties:
+      usuarioNomeCompleto:
+        type: string
+        description: Nome completo do usuário
+      usuarioEmail:
+        type: string
+        description: E-mail do usuário
+      usuarioTelefone:
+        type: string
+        description: Telefone do usuário
+    title: Usuarios
+  AutenticacaoResponse:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Autenticacao'
+      message:
+        type: array
+        items:
+          type: string
+      error:
+        type: array
+        items:
+          type: string
+    title: AutenticacaoResponse
+  AutenticacaoRequest:
+    type: object
+    properties:
+      usuarioEmail:
+        type: string
+        description: E-mail do usuário
+      usuarioSenha:
+        type: string
+        description: Senha do usuário
+    title: AutenticacaoResponse
+  Autenticacao:
+    type: object
+    properties:
+      token:
+        type: string
+        description: Token de acesso
+    title: Autenticacao
+  CertificadoResponse:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Certificado'
+      message:
+        type: array
+        items:
+          type: string
+      error:
+        type: array
+        items:
+          type: string
+    title:  CertificadoResponse
+  CertificadoRequest:
+    type: object
+    properties:
+      apresentarPercentual:
+        type: boolean
+        description: E-mail do usuário
+    title: CertificadoResponse
+  Certificado:
+    type: object
+    properties:
+      certificadoUrl:
+        type: string
+        description: URL de acesso ao certificado
+      percentualAcerto:
+        type: integer
+        format: "int64"
+        description: Percentual de acerto
+    title: Autenticacao
+  PerguntaResponse:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Pergunta'
+      message:
+        type: array
+        items:
+          type: string
+      error:
+        type: array
+        items:
+          type: string
+    title:  PerguntaResponse
+  Pergunta:
+    type: object
+    properties:
+      perguntaId:
+        type: integer
+        format: "int64"
+        description: ID da pergunta a ser respondida
+      perguntaDescricao:
+        type: string
+        description: Pergunta a ser respondida
+    title: Pergunta
+  RespostaListaResponse:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Resposta'
+      message:
+        type: array
+        items:
+          type: string
+      error:
+        type: array
+        items:
+          type: string
+    title:  RespostaListaResponse
+  RespostaResponse:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Resposta'
+      message:
+        type: array
+        items:
+          type: string
+      error:
+        type: array
+        items:
+          type: string
+    title:  RespostaResponse
+  RespostaRequest:
+    type: object
+    properties:
+      perguntaId:
+        type: integer
+        format: "int64"
+        description: ID da Pergunta
+      respostaDada:
+        type: boolean
+        description: Resposta dada pelo usuário a pergunta
+    title: RespostaRequest
+  RespostaAlterarRequest:
+    type: object
+    properties:
+      respostaDada:
+        type: boolean
+        description: Resposta dada pelo usuário a pergunta
+    title: RespostaAlterarRequest
+  Resposta:
+    type: object
+    properties:
+      respostaId:
+        type: integer
+        format: "int64"
+        description: ID da Resposta
+      perguntaId:
+        type: integer
+        format: "int64"
+        description: ID da Pergunta
+      perguntaDescricao:
+        type: string
+        description: Pergunta que foi respondida
+      respostaDada:
+        type: boolean
+        description: Resposta dada pelo usuário
+    title: Autenticacao
