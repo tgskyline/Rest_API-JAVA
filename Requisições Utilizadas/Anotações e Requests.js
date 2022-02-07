@@ -61,4 +61,4 @@ curl -X GET -is http://localhost:8089/api/v1/viagens?regiao=Nordeste -H 'Authori
 USUARIO
 curl -X GET -is http://localhost:8089/api/v1/viagens/1 -H 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c3VhcmlvQGVtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTVUFSSU8iLCJjcmVhdGVkIjoxNjQ0MTgwNjExNzgzLCJleHAiOjE2NDQyODA2MTB9.q3JuhcEnASb70VMSuJOk5YbcaafxBT3W6IeJrAD43FojLSYBU_dpwHpwECknuBfcFbnkwOuXR7ShiqTc1Wz4TQ'
  
-curl -X POST -i http://localhost:8089/api/v1/auth -d '{ "email": "admin@email.com", "senha": "654321" }' -H 'Content-Type: application/json' 
+curl -X GET -i http://localhost:8089/api/v1/viagens/1 -H 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c3VhcmlvQGVtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTVUFSSU8iLCJjcmVhdGVkIjoxNjQ0MTgwNjExNzgzLCJleHAiOjE2NDQyODA2MTB9.q3JuhcEnASb70VMSuJOk5YbcaafxBT3W6IeJrAD43FojLSYBU_dpwHpwECknuBfcFbnkwOuXR7ShiqTc1Wz4TQ'
