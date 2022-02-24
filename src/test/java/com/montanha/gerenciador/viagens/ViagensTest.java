@@ -1,5 +1,4 @@
 package com.montanha.gerenciador.viagens;
-
 import io.restassured.http.ContentType;
 import org.junit.Test;
 import static io.restassured.RestAssured.*;
@@ -7,10 +6,9 @@ import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
 
 public class ViagensTest {
-    private String token;
-
-@Test
-    public void testDadoUmAdministradorQuandoCadastroViagensEntaoObtenhoStatusCode201(String string) {
+    
+    @Test
+    public void testDadoUmAdministradorQuandoCadastroViagensEntaoObtenhoStatusCode201() {
 
         //Configurar o caminho comum de acesso a minha API REST
 
@@ -45,7 +43,7 @@ public class ViagensTest {
                         "}")
                 .contentType(ContentType.JSON)
         .when()
-                .post("/v1vviagens")
+                .post("/v1/viagens")
         .then()
                 .log().all()
                 .assertThat()

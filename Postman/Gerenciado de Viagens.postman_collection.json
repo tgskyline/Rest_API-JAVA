@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "bfbd82d8-cb65-49b9-a9a3-910f2d07d37f",
+		"name": "Gerenciado de Viagens",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fazer login com Administrador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const resposta = pm.response.json();\r",
+							"pm.globals.set(\"token\", resposta.data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"admin@email.com\",\r\n  \"senha\": \"654321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{servidor}}/v1/auth",
+					"host": [
+						"{{servidor}}"
+					],
+					"path": [
+						"v1",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar viagem",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"const schema = {\r",
+							"    \"$schema\": \"http://json-schema.org/draft-07/schema\",\r",
+							"    \"$id\": \"http://example.com/example.json\",\r",
+							"    \"type\": \"object\",\r",
+							"    \"title\": \"The root schema\",\r",
+							"    \"description\": \"The root schema comprises the entire JSON document.\",\r",
+							"    \"default\": {},\r",
+							"    \"examples\": [\r",
+							"        {\r",
+							"            \"data\": {\r",
+							"                \"id\": 1,\r",
+							"                \"localDeDestino\": \"São Paulo\",\r",
+							"                \"dataPartida\": \"2022-02-08\",\r",
+							"                \"dataRetorno\": \"2022-03-08\",\r",
+							"                \"acompanhante\": \"Braian\",\r",
+							"                \"regiao\": \"Suldeste\"\r",
+							"            },\r",
+							"            \"errors\": []\r",
+							"        }\r",
+							"    ],\r",
+							"    \"required\": [\r",
+							"        \"data\",\r",
+							"        \"errors\"\r",
+							"    ],\r",
+							"    \"properties\": {\r",
+							"        \"data\": {\r",
+							"            \"$id\": \"#/properties/data\",\r",
+							"            \"type\": \"object\",\r",
+							"            \"title\": \"The data schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": {},\r",
+							"            \"examples\": [\r",
+							"                {\r",
+							"                    \"id\": 1,\r",
+							"                    \"localDeDestino\": \"São Paulo\",\r",
+							"                    \"dataPartida\": \"2022-02-08\",\r",
+							"                    \"dataRetorno\": \"2022-03-08\",\r",
+							"                    \"acompanhante\": \"Braian\",\r",
+							"                    \"regiao\": \"Suldeste\"\r",
+							"                }\r",
+							"            ],\r",
+							"            \"required\": [\r",
+							"                \"id\",\r",
+							"                \"localDeDestino\",\r",
+							"                \"dataPartida\",\r",
+							"                \"dataRetorno\",\r",
+							"                \"acompanhante\",\r",
+							"                \"regiao\"\r",
+							"            ],\r",
+							"            \"properties\": {\r",
+							"                \"id\": {\r",
+							"                    \"$id\": \"#/properties/data/properties/id\",\r",
+							"                    \"type\": \"integer\",\r",
+							"                    \"title\": \"The id schema\",\r",
+							"                    \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"                    \"default\": 0,\r",
+							"                    \"examples\": [\r",
+							"                        1\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"localDeDestino\": {\r",
+							"                    \"$id\": \"#/properties/data/properties/localDeDestino\",\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"title\": \"The localDeDestino schema\",\r",
+							"                    \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"examples\": [\r",
+							"                        \"São Paulo\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"dataPartida\": {\r",
+							"                    \"$id\": \"#/properties/data/properties/dataPartida\",\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"title\": \"The dataPartida schema\",\r",
+							"                    \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"examples\": [\r",
+							"                        \"2022-02-08\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"dataRetorno\": {\r",
+							"                    \"$id\": \"#/properties/data/properties/dataRetorno\",\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"title\": \"The dataRetorno schema\",\r",
+							"                    \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"examples\": [\r",
+							"                        \"2022-03-08\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"acompanhante\": {\r",
+							"                    \"$id\": \"#/properties/data/properties/acompanhante\",\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"title\": \"The acompanhante schema\",\r",
+							"                    \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"examples\": [\r",
+							"                        \"Braian\"\r",
+							"                    ]\r",
+							"                },\r",
+							"                \"regiao\": {\r",
+							"                    \"$id\": \"#/properties/data/properties/regiao\",\r",
+							"                    \"type\": \"string\",\r",
+							"                    \"title\": \"The regiao schema\",\r",
+							"                    \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"                    \"default\": \"\",\r",
+							"                    \"examples\": [\r",
+							"                        \"Suldeste\"\r",
+							"                    ]\r",
+							"                }\r",
+							"            },\r",
+							"            \"additionalProperties\": true\r",
+							"        },\r",
+							"        \"errors\": {\r",
+							"            \"$id\": \"#/properties/errors\",\r",
+							"            \"type\": \"array\",\r",
+							"            \"title\": \"The errors schema\",\r",
+							"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+							"            \"default\": [],\r",
+							"            \"examples\": [\r",
+							"                []\r",
+							"            ],\r",
+							"            \"additionalItems\": true,\r",
+							"            \"items\": {\r",
+							"                \"$id\": \"#/properties/errors/items\"\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"additionalProperties\": true\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Validar a estrutura do corpo da resposta\", function () {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"acompanhante\": \"Braian\",\r\n  \"dataPartida\": \"2022-02-08\",\r\n  \"dataRetorno\": \"2022-03-08\",\r\n  \"localDeDestino\": \"São Paulo\",\r\n  \"regiao\": \"Suldeste\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{servidor}}/v1/viagens",
+					"host": [
+						"{{servidor}}"
+					],
+					"path": [
+						"v1",
+						"viagens"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
